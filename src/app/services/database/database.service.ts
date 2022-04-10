@@ -20,7 +20,7 @@ export class DatabaseService {
     }
   }
 
-  async filtarPorNombre(elementsArray: any, nombre: string) {
+  filtarPorNombre(elementsArray: any, nombre: string) {
     let resultado = elementsArray.filter((element: any) => {
       return element.name.toLowerCase().includes(nombre.toLowerCase());
     });
