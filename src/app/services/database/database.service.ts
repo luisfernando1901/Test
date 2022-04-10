@@ -20,29 +20,52 @@ export class DatabaseService {
     }
   }
 
-  filtarPorNombre(elementsArray: any, nombre: string) {
+  async filtarPorNombre(elementsArray: any, nombre: string) {
     let resultado = elementsArray.filter((element: any) => {
       return element.name.toLowerCase().includes(nombre.toLowerCase());
     });
     return resultado;
   }
 
-  crearPokemon(pokemon: any) {
+  async crearPokemon(pokemon: any) {
     let query = this.http.post(
       environment.apiUrl + '/pokemons/?idAuthor=1',
       pokemon
     );
     try {
-      let resp = lastValueFrom(query);
+      let resp = await lastValueFrom(query);
       return resp;
     } catch (error) {
       return null;
     }
   }
-  deletePokemon(id: number) {
+  async deletePokemon(id: number) {
     let query = this.http.delete(environment.apiUrl + '/pokemons/' + id);
     try {
-      let resp = lastValueFrom(query);
+      let resp = await lastValueFrom(query);
+      return resp;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async consultarPorId(id: number) {
+    let query = this.http.get(environment.apiUrl + '/pokemons/' + id);
+    try {
+      let resp = await lastValueFrom(query);
+      return resp;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async actualizarPokemon(pokemon: any) {
+    let query = this.http.put(
+      environment.apiUrl + '/pokemons/' + pokemon.id,
+      pokemon
+    );
+    try {
+      let resp = await lastValueFrom(query);
       return resp;
     } catch (error) {
       return null;
